@@ -74,4 +74,5 @@ ScopeSymbolTable >> lookupStrategy: anObject [
 { #category : #accessing }
 ScopeSymbolTable >> searchPath [
 	^ searchPath
+		ifNil: [ searchPath := lookupStrategy searchPathFor: self ]
 ]

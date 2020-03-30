@@ -5,8 +5,8 @@ Class {
 }
 
 { #category : #lookup }
-LookupStrategy >> searchPath: scopeSymbolTable [
+LookupStrategy >> searchPathFor: scopeSymbolTable [
 	"it returns a ordered collection of SymbolTables to perform lookup"
 
-	^ scopeSymbolTable allContainers
+	^ self subclassResponsibility 
 ]
