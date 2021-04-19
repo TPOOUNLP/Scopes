@@ -17,7 +17,12 @@ ScopeSymbolTable class >> lookupStrategy: aLookupStrategy [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : #adding }
+ScopeSymbolTable >> addEntry: anEntry [
+	entries addLast: anEntry
+]
+
+{ #category : #deprecated }
 ScopeSymbolTable >> allContainers [
 "not checking for circular references"
 	| oc |
@@ -61,17 +66,29 @@ ScopeSymbolTable >> isRoot [
 	^ container isNil
 ]
 
-{ #category : #accessing }
+{ #category : #lookup }
+ScopeSymbolTable >> lookupForSymbol: aSymbol [
+	^ entries
+		detect: [ :entry | (entry lookupForSymbol: aSymbol) notNil ]
+		ifNone: [ self lookupInContainerForSymbol: aSymbol ]
+]
+
+{ #category : #private }
+ScopeSymbolTable >> lookupInContainerForSymbol: aSymbol [
+	^ container lookupForSymbol: aSymbol
+]
+
+{ #category : #deprecated }
 ScopeSymbolTable >> lookupStrategy [
 	^ lookupStrategy
 ]
 
-{ #category : #accessing }
+{ #category : #deprecated }
 ScopeSymbolTable >> lookupStrategy: anObject [
 	lookupStrategy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #deprecated }
 ScopeSymbolTable >> searchPath [
 	^ searchPath
 		ifNil: [ searchPath := lookupStrategy searchPathFor: self ]
